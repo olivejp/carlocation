@@ -1,0 +1,100 @@
+<div style="text-align:center">
+  <h1>
+    Car Location
+  </h1>
+</div>
+<div class="container" style="text-align:center">
+  <form name="form" role="form" (ngSubmit)="generate()" [formGroup]="formGroup">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm">
+          <div class="input-group mb-1">
+            <label class="form-control grey">Immatriculation</label>
+            <input class="form-control" type="string" id="immatriculation"
+                   name="immatriculation" formControlName="immatriculation">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm">
+          <div class="input-group mb-1">
+            <label class="form-control grey">Kilométrage</label>
+            <input class="form-control" type="number" id="kilometrage" name="kilometrage"
+                   formControlName="kilometrage">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm">
+          <div class="input-group mb-1">
+            <label class="form-control grey">Date début</label>
+            <input class="form-control" type="date" id="dateDebut" name="dateDebut"
+                   formControlName="dateDebut">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm">
+          <div class="input-group mb-1">
+            <label class="form-control grey">Date Fin</label>
+            <input class="form-control" type="date" id="dateFin" name="dateFin"
+                   formControlName="dateFin">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm">
+          <div class="input-group mb-1">
+            <label class="form-control grey">Nom emprunteur</label>
+            <input class="form-control" type="string" id="nomEmprunteur"
+                   name="nomEmprunteur" formControlName="nomEmprunteur">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm">
+          <h3>Liste des défauts</h3>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm">
+          <div class="input-group mb-1">
+            <input class="form-control" type="string" id="defaut"
+                   placeholder="Ajouter un nouveau défaut"
+                   name="defaut" formControlName="defaut" [(ngModel)]="defaut">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button" id="button-addon1" (click)="addDefaut()">Ajouter</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngFor="let element of listDefaults;let i = index" class="row">
+        <div class="col-sm">
+          <div class="input-group mb-1">
+            <input type="text" class="form-control" placeholder="Défauts" aria-label="Défauts"
+                   aria-describedby="button-addon2" [value]="element" readonly>
+            <div class="input-group-append">
+              <button class="btn btn-danger" type="button" id="button-addon2" (click)="removeDefaut(i)">Supprimer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-group" role="group">
+        <button [class.btn-success]="formGroup.valid" class="btn" type="submit" [disabled]="!formGroup.valid">Générer
+        </button>
+        <button class="btn btn-warning" type="button" (click)="reset()">Effacer</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
