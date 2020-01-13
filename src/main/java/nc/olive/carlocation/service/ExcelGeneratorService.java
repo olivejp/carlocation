@@ -13,7 +13,7 @@ public class ExcelGeneratorService {
 
     public static final String HEADER_TITLE = "Fiche de location de véhicule";
     public static final String SHEET_NAME = "Location";
-    public static final String DATE_FORMAT = "mm/dd/yyyy";
+    public static final String DATE_FORMAT = "dd/mm/yyyy";
 
     private CellStyle createHeaderCellStyle(XSSFWorkbook workbook) {
         CellStyle headerStyle = workbook.createCellStyle();
@@ -74,13 +74,13 @@ public class ExcelGeneratorService {
         createLocalDateLabelAndValueRow(sheet, 5, "Date de début de location", locationDto.getDateDebut(), dateCellStyle);
         createLocalDateLabelAndValueRow(sheet, 6, "Date de fin de location", locationDto.getDateFin(), dateCellStyle);
 
-        if (locationDto.getListDefaults() != null && !locationDto.getListDefaults().isEmpty()) {
-            createStringLabelAndValueRow(sheet, 7, "Défauts constatés sur le véhicule", locationDto.getListDefaults().get(0));
-            if (locationDto.getListDefaults().size() > 1) {
-                for (int i = 1; i < locationDto.getListDefaults().size(); i++) {
+        if (locationDto.getListeDefauts() != null && !locationDto.getListeDefauts().isEmpty()) {
+            createStringLabelAndValueRow(sheet, 7, "Défauts constatés sur le véhicule", locationDto.getListeDefauts().get(0));
+            if (locationDto.getListeDefauts().size() > 1) {
+                for (int i = 1; i < locationDto.getListeDefauts().size(); i++) {
                     Row row = sheet.createRow(7 + i);
                     Cell defautsCell = row.createCell(2);
-                    defautsCell.setCellValue(locationDto.getListDefaults().get(i));
+                    defautsCell.setCellValue(locationDto.getListeDefauts().get(i));
                 }
             }
         }

@@ -1,8 +1,15 @@
 import {Component} from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {LocationService} from "./service/location.service";
 import {LocationDto} from "./domain/location";
 import {saveAs} from 'file-saver';
+
+function validateDateRange(form: AbstractControl): { [key: string]: any } {
+  const dateDebut = form.get('dateDebut').value;
+  const dateFin = form.get('dateFin').value;
+  const sup = dateDebut < dateFin;
+  return !sup ? {"validateDateRange": sup} : null;
+}
 
 @Component({
   selector: 'app-root',
@@ -10,29 +17,23 @@ import {saveAs} from 'file-saver';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'carlocation';
 
-  formGroup = this.fb.group({
-    immatriculation: ['', [Validators.required]],
-    kilometrage: ['', [Validators.required]],
-    dateDebut: ['', [Validators.required]],
-    dateFin: ['', [Validators.required]],
-    nomEmprunteur: ['', [Validators.required]],
-    defaut: ['']
-  });
+  listeDefauts: string[];
+  currentDefaut: string;
 
-  immatriculation: string;
-  kilometrage: number;
-  dateDebut: string;
-  dateFin: string;
-  nomEmprunteur: string;
-  listDefaults: string[];
-  defaut: string;
+  formGroup = new FormGroup({
+    immatriculation: new FormControl('', Validators.required),
+    kilometrage: new FormControl('', Validators.required),
+    dateDebut: new FormControl('', Validators.required),
+    dateFin: new FormControl('', Validators.required),
+    nomEmprunteur: new FormControl('', Validators.required),
+    defaut: new FormControl(''),
+  }, validateDateRange);
 
   constructor(private fb: FormBuilder,
               private locationService: LocationService) {
-    this.listDefaults = [];
-    this.defaut = null;
+    this.listeDefauts = [];
+    this.currentDefaut = null;
   }
 
   generate() {
@@ -42,34 +43,28 @@ export class AppComponent {
     location.nomEmprunteur = this.formGroup.get('nomEmprunteur').value;
     location.dateDebut = this.formGroup.get('dateDebut').value;
     location.dateFin = this.formGroup.get('dateFin').value;
-    location.listDefaults = this.listDefaults;
+    location.listeDefauts = this.listeDefauts;
 
     this.locationService.generateXlsx(location)
-      .subscribe(data => {
-          const blob = new Blob([data]);
-          saveAs(blob, "myFile.xlsx");
-        },
+      .subscribe(
+        data => saveAs(new Blob([data]), location.immatriculation + '.xlsx'),
         error => console.error(error)
       );
   }
 
   addDefaut() {
-    if (this.defaut) {
-      this.listDefaults.push(this.defaut);
-      this.defaut = null;
+    if (this.currentDefaut) {
+      this.listeDefauts.push(this.currentDefaut);
+      this.currentDefaut = null;
     }
   }
 
   removeDefaut(index: number) {
-    this.listDefaults.splice(index, 1);
+    this.listeDefauts.splice(index, 1);
   }
 
   reset() {
-    this.immatriculation = null;
-    this.kilometrage = null;
-    this.nomEmprunteur = null;
-    this.dateDebut = null;
-    this.dateFin = null;
-    this.listDefaults = [];
+    this.formGroup.reset();
+    this.listeDefauts = [];
   }
 }

@@ -10,7 +10,7 @@ public class LocationDto {
     private String nomEmprunteur;
     private LocalDate dateDebut;
     private LocalDate dateFin;
-    private List<String> listDefaults;
+    private List<String> listeDefauts;
 
     public String getImmatriculation() {
         return immatriculation;
@@ -32,8 +32,8 @@ public class LocationDto {
         return dateFin;
     }
 
-    public List<String> getListDefaults() {
-        return listDefaults;
+    public List<String> getListeDefauts() {
+        return listeDefauts;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class LocationDto {
                 ", nomEmprunteur='" + nomEmprunteur + '\'' +
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +
-                ", listDefaults=" + listDefaults +
+                ", listeDefauts=" + listeDefauts +
                 '}';
     }
 }

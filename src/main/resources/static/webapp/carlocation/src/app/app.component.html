@@ -1,11 +1,11 @@
-<div style="text-align:center">
+<div class="mt-lg-5" style="text-align:center">
   <h1>
     Car Location
   </h1>
 </div>
-<div class="container" style="text-align:center">
+<div class="container">
   <form name="form" role="form" (ngSubmit)="generate()" [formGroup]="formGroup">
-    <div class="form-group">
+    <div class="form-group" style="text-align:center">
       <div class="row">
         <div class="col-sm">
           <div class="input-group mb-1">
@@ -56,26 +56,13 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row mt-lg-5">
         <div class="col-sm">
           <h3>Liste des défauts</h3>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-sm">
-          <div class="input-group mb-1">
-            <input class="form-control" type="string" id="defaut"
-                   placeholder="Ajouter un nouveau défaut"
-                   name="defaut" formControlName="defaut" [(ngModel)]="defaut">
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="button" id="button-addon1" (click)="addDefaut()">Ajouter</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div *ngFor="let element of listDefaults;let i = index" class="row">
+      <div *ngFor="let element of listeDefauts;let i = index" class="row">
         <div class="col-sm">
           <div class="input-group mb-1">
             <input type="text" class="form-control" placeholder="Défauts" aria-label="Défauts"
@@ -88,10 +75,26 @@
         </div>
       </div>
 
-      <div class="btn-group" role="group">
-        <button [class.btn-success]="formGroup.valid" class="btn" type="submit" [disabled]="!formGroup.valid">Générer
+      <div class="row">
+        <div class="col-sm">
+          <div class="input-group mb-1">
+            <input class="form-control" type="string" id="defaut"
+                   placeholder="Ajouter un nouveau défaut"
+                   name="defaut" formControlName="defaut" [(ngModel)]="currentDefaut">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button" id="button-addon1" (click)="addDefaut()">Ajouter</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="btn-group mt-lg-5" role="group">
+        <button [class.btn-success]="formGroup.valid" class="btn btn-success" type="submit"
+                [disabled]="!formGroup.valid">Générer Excel
         </button>
-        <button class="btn btn-warning" type="button" (click)="reset()">Effacer</button>
+        <button class="btn btn-warning" type="button" (click)="reset()">Remise à zéro</button>
       </div>
     </div>
   </form>

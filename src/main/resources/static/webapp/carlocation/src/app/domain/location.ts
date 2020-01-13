@@ -4,5 +4,5 @@ export class LocationDto {
   nomEmprunteur: string;
   dateDebut: string;
   dateFin: string;
-  listDefaults: string[];
+  listeDefauts: string[];
 }
