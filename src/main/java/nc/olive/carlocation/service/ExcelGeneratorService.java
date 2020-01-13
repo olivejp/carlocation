@@ -25,6 +25,14 @@ public class ExcelGeneratorService {
         return headerStyle;
     }
 
+    private CellStyle createDateCellStyle(Workbook workbook) {
+        CellStyle dateCellStyle = workbook.createCellStyle();
+        CreationHelper createHelper = workbook.getCreationHelper();
+        short dataFormat = createHelper.createDataFormat().getFormat(DATE_FORMAT);
+        dateCellStyle.setDataFormat(dataFormat);
+        return dateCellStyle;
+    }
+
     private void createHeaderCell(Sheet sheet, CellStyle headerStyle) {
         Row headerRow = sheet.createRow(1);
         Cell headerCell = headerRow.createCell(1);
@@ -47,14 +55,6 @@ public class ExcelGeneratorService {
         Cell value = row.createCell(2);
         label.setCellValue(rowTitle);
         value.setCellValue(rowValue);
-    }
-
-    private CellStyle createDateCellStyle(Workbook workbook) {
-        CellStyle dateCellStyle = workbook.createCellStyle();
-        CreationHelper createHelper = workbook.getCreationHelper();
-        short dataFormat = createHelper.createDataFormat().getFormat(DATE_FORMAT);
-        dateCellStyle.setDataFormat(dataFormat);
-        return dateCellStyle;
     }
 
     public Workbook generateLocation(LocationDto locationDto) {
